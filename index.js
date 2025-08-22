@@ -4,13 +4,13 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// ⬆️ Middleware за JSON
+// Middleware за JSON
 app.use(bodyParser.json());
 
-// 🧠 Масив за съхранение на всички заявки
+// Масив за съхранение на всички заявки
 const logs = [];
 
-// 📬 Webhook endpoint – приема POST и GET
+// Webhook endpoint – приема POST и GET
 app.all('/webhook', (req, res) => {
   const data = {
     timestamp: new Date().toISOString(),
@@ -19,9 +19,9 @@ app.all('/webhook', (req, res) => {
     payload: req.body        // тяло (ако POST)
   };
 
-  logs.push(data); // 📝 записваме в масива
+  logs.push(data); // записваме в масива
 
-  console.log('📬 Получена заявка:', data);
+  console.log('Получена заявка:', data);
 
   res.status(200).send(`${req.method} заявка приета успешно!`);
 });
@@ -38,7 +38,7 @@ app.get('/logs', (req, res) => {
         </style>
       </head>
       <body>
-        <h2>📜 Получени заявки:</h2>
+        <h2>Получени заявки:</h2>
         <pre>${JSON.stringify(logs, null, 2)}</pre>
       </body>
     </html>
@@ -46,7 +46,7 @@ app.get('/logs', (req, res) => {
   res.send(html);
 });
 
-// 🟢 Старт на сървъра
+// Старт на сървъра
 app.listen(port, () => {
-  console.log(`🚀 Сървърът работи на порт ${port}`);
+  console.log(`Сървърът работи на порт ${port}`);
 });
