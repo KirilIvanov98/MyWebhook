@@ -12,6 +12,10 @@ const logs = [];
 
 // Webhook endpoint – приема POST и GET
 app.all('/webhook', (req, res) => {
+	if (req.method === 'HEAD') {
+    return res.sendStatus(200); // Игнорира HEAD
+  }
+	
   const data = {
     timestamp: new Date().toISOString(),
     method: req.method,      // GET или POST
