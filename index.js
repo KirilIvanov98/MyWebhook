@@ -10,6 +10,13 @@ app.use(bodyParser.json());
 // Масив за съхранение на всички заявки
 const logs = [];
 
+// Функция за ISO с локално време
+function toLocalISOString(date = new Date()) {
+  const tzOffset = date.getTimezoneOffset() * 60000; // в милисекунди
+  const localISO = new Date(date - tzOffset).toISOString().slice(0, -1); // махаме 'Z'
+  return localISO;
+}
+
 // Webhook endpoint – приема POST и GET
 app.all('/webhook', (req, res) => {
 	if (req.method === 'HEAD') {
@@ -17,7 +24,7 @@ app.all('/webhook', (req, res) => {
   }
 	
   const data = {
-    timestamp: new Date().toISOString(),
+    timestamp: toLocalISOString(),
     method: req.method,      // GET или POST
     query: req.query,        // параметри от URL (ако GET)
     payload: req.body        // тяло (ако POST)
